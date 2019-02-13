@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-sm-12">
-      <h4>Leaderboards</h4>
+      <h4>Leaderboards - TEST</h4>
     </div>
     <Leaderboard 
       v-for="race in races" 
