@@ -1,10 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Home from './components/Home.vue';
+import Race from './components/Race.vue';
+import Course from './components/Course.vue';
+import Segment from './components/Segment.vue';
+import Checkins from './components/Checkins.vue';
+import Callback from './components/Callback.vue';
+import Participant from './components/Participant.vue';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -14,12 +20,36 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      path: '/race/:code',
+      name: 'race',
+      component: Race,
+    },
+    {
+      path: '/course/:code',
+      name: 'course',
+      component: Course,
+    },
+    {
+      path: '/segment/:id',
+      name: 'segment',
+      component: Segment,
+    },
+    {
+      path: '/checkins/:code',
+      name: 'checkins',
+      component: Checkins,
+    },
+    {
+      path: '/callback',
+      name: 'callback',
+      component: Callback,
+    },
+    {
+      path: '/participant/:id',
+      name: 'participant',
+      component: Participant,
     },
   ],
 });
+
+export default router;
