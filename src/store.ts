@@ -5,7 +5,7 @@ import axios from 'axios';
 Vue.use(Vuex);
 
 const api = axios.create({
-  baseURL: 'https://race-tracker-service.azurewebsites.net/api',
+  baseURL: process.env.VUE_APP_TRACKER_SERVICE_URL,
 });
 
 /*

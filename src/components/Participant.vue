@@ -2,7 +2,7 @@
   <div class="col-sm-12" v-if="leader && race">
     <h4>{{ leader.participant.fullName }} - #{{ leader.participant.bib }}</h4>
     <div>
-      {{ leader.participant.age }} - {{ gender(leader.participant.gender) }} <br/>
+      {{ leader.participant.age }}<br/>
       {{ leader.participant.hometown }}
     </div>
     <div>

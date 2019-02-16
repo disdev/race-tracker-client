@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="loadingCount > 0" class="loading">Loading&#8230;</div>
-
+    <h2>{{ appTitle }}</h2>
     <b-nav class="row justify-content-md-center">
       <b-nav-item to="/">Dashboard</b-nav-item>
       <b-nav-item v-for="race in races" :key="race.id" :to="{ name: 'race', params: { code: race.code }}">{{ race.name }}</b-nav-item>
@@ -22,6 +22,8 @@ export default class App extends Vue {
   @Action('loadRaces') private loadRaces: any;
   @Action('loadLeaders') private loadLeaders: any;
   @Action('loadSegments') private loadSegments: any;
+
+  private appTitle: string = process.env.VUE_APP_TITLE;
 
   private mounted() {
     this.loadRaces();
