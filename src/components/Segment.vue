@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12 col-md-6" v-if="segment">
+  <div class="col-sm-12" v-if="segment">
     <h2>{{ segment.name }}</h2>
     <h4>{{ race.name }} Course</h4>
     <div>
@@ -7,7 +7,9 @@
     </div>
     <div style="margin-top: 20px;">
       <b-table responsive striped :fields="fields" :items="leaders" style="width: 100%">
-        <span slot="name" slot-scope="data" v-html="data.value"></span>
+        <template slot="participant.fullName" slot-scope="data">
+          <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">{{ data.item.participant.fullName }}</router-link>
+        </template>
       </b-table>
     </div>
   </div>
@@ -25,7 +27,7 @@ export default class Race extends Vue {
   @Getter('getLeadersByRaceId') private getLeadersByRaceId: any;
 
   private fields: any = [
-    { label: 'Name', key: 'name', formatter: 'participantLinkFormatter' },
+    { label: 'Name', key: 'participant.fullName' },
     { label: 'When', key: 'when', formatter: 'timeFormatter' },
   ];
 

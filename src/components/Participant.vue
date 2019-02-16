@@ -69,8 +69,10 @@ export default class Participant extends Vue {
   ];
 
   private handleSubscribe() {
-    console.log('adding subscription for ' + this.subscriptionPhone + ' for bib ' + this.leader.participant.bib);
-    const subscriptionResult = this.addSubscription({ phoneNumber: this.subscriptionPhone, raceNumber: this.leader.participant.bib });
+    const subscriptionResult = this.addSubscription({
+      phoneNumber: this.subscriptionPhone,
+      raceNumber: this.leader.participant.bib,
+    });
   }
 
   get rowData() {

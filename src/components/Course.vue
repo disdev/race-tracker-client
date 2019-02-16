@@ -2,7 +2,9 @@
   <div class="col-sm-12" v-if="race">
     <h4>{{ race.name }}</h4>
     <b-table striped :fields="fields" :items="segments">
-      <span slot="name" slot-scope="data" v-html="data.value"></span>
+      <template slot="name" slot-scope="data">
+        <router-link :to="{ name: 'segment', params: { id: data.item.id }}">{{ data.item.name }}</router-link>
+      </template>
     </b-table>
   </div>
 </template>
@@ -26,14 +28,10 @@ export default class Course extends Vue {
 
   private fields: any = [
     { label: 'Order', key: 'order' },
-    { label: 'Name', key: 'name', formatter: 'linkFormatter' },
+    { label: 'Name', key: 'name' },
     { label: 'Distance', key: 'distance' },
     { label: 'Total Distance', key: 'totalDistance' },
   ];
-
-  private linkFormatter(value: any, key: any, item: any) {
-    return '<a href="/segment/' + item.id + '">' + value + '</a>';
-  }
 }
 </script>
 

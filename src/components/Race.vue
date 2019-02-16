@@ -6,6 +6,9 @@
       <router-link :to="{ name: 'checkins', params: { code: race.code }}">Checkins</router-link>
     </p>
     <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%">
+      <template slot="place" slot-scope="data">
+        {{ data.index + 1 }}
+      </template>
       <template slot="name" slot-scope="data">
         <router-link :to="{ name: 'participant', params: { id: data.item.bib }}">{{ data.item.name }}</router-link>
       </template>
@@ -28,6 +31,10 @@ export default class Race extends Vue {
 
   get fields() {
     const out = [
+      {
+        key: 'place',
+        label: 'Place',
+      },
       {
         key: 'name',
         label: 'Name',
