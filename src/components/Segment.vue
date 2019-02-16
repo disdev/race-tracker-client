@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm-12 col-md-6">
+  <div class="col-sm-12 col-md-6" v-if="segment">
     <h2>{{ segment.name }}</h2>
     <h4>{{ race.name }} Course</h4>
     <div>
