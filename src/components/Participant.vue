@@ -1,32 +1,44 @@
 <template>
-  <div class="col-sm-12" v-if="leader && race">
-    <h4>{{ leader.participant.fullName }} - #{{ leader.participant.bib }}</h4>
-    <div>
-      {{ leader.participant.age }}<br/>
-      {{ leader.participant.hometown }}
+  <div class="container" v-if="leader && race">
+    <div class="row">
+      <div class="col-sm-9">
+        <h4>{{ leader.participant.fullName }} - #{{ leader.participant.bib }}</h4>
+        <div>
+          {{ leader.participant.age }}<br/>
+          {{ leader.participant.hometown }}
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <b-button v-b-modal.subscribe variant="primary">Notify me</b-button>
+        <b-modal id="subscribe" ref="subscribeModal" title="Subscribe to updates" @ok="handleSubscribe">
+          <p>Enter your phone number below to receive updates for this runner.
+            <strong>Updates will be sent regardless of the time of day.</strong> 
+            You will receive a confirmation text at the number entered below.
+          </p>
+          <b-form-group id="subscriptionFormGroup"
+                      label="Phone number:"
+                      label-for="phoneNumber">
+          <b-form-input id="phoneNumber"
+                        type="tel"
+                        v-model="subscriptionPhone"
+                        required
+                        placeholder="Enter phone number">
+          </b-form-input>
+          <div>
+            <b-alert show variant="danger" v-if="errors.length">
+              <span v-for="(error, index) in errors" v-bind:key="`message-${index}`">
+                {{ error.message }}
+              </span>
+            </b-alert>
+          </div>
+        </b-form-group>
+        </b-modal>
+      </div>
     </div>
-    <div>
-      <b-button v-b-modal.subscribe variant="primary">Notify me</b-button>
-      <b-modal id="subscribe" title="Subscribe to updates" @ok="handleSubscribe">
-        <p>Enter your phone number below to receive updates for this runner.
-          <strong>Updates will be sent regardless of the time of day.</strong> 
-          You will receive a confirmation text at the number entered below.
-        </p>
-        <p></p>
-        <b-form-group id="subscriptionFormGroup"
-                    label="Phone number:"
-                    label-for="phoneNumber">
-        <b-form-input id="phoneNumber"
-                      type="tel"
-                      v-model="subscriptionPhone"
-                      required
-                      placeholder="Enter phone number">
-        </b-form-input>
-      </b-form-group>
-      </b-modal>
-    </div>
-    <div style="margin-top: 20px;">
-      <b-table striped :fields="fields" :items="rowData"></b-table>
+    <div class="row">
+      <div class="col-sm-12" style="margin-top: 20px;">
+        <b-table striped :fields="fields" :items="rowData"></b-table>
+      </div>
     </div>
   </div>
 </template>
@@ -35,9 +47,14 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { State, Action, Getter } from 'vuex-class';
 import moment from 'moment';
+import { Modal } from 'bootstrap-vue';
 
 @Component
 export default class Participant extends Vue {
+  public $refs!: {
+    subscribeModal: Modal,
+  };
+
   @State('races') private races: any;
 
   @Getter('getLeaderByParticipantId') private getLeaderByParticipantId: any;
@@ -68,11 +85,26 @@ export default class Participant extends Vue {
     },
   ];
 
-  private handleSubscribe() {
-    const subscriptionResult = this.addSubscription({
+  private errors: any = [];
+
+  private async handleSubscribe(evt: any) {
+    evt.preventDefault();
+
+    this.errors = [];
+
+    const subscriptionResult = await this.addSubscription({
       phoneNumber: this.subscriptionPhone,
       raceNumber: this.leader.participant.bib,
     });
+
+    if (subscriptionResult === false) {
+      this.errors.push({
+        message: 'Whoops! Please double-check the phone number and try again.',
+      });
+    } else {
+      this.subscriptionPhone = '';
+      this.$refs.subscribeModal.hide();
+    }
   }
 
   get rowData() {

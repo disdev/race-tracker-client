@@ -1,18 +1,20 @@
 <template>
-  <div class="col-sm-12" v-if="segment">
-    <h2>{{ segment.name }}</h2>
-    <h4>{{ race.name }} Course</h4>
-    <div>
-      {{ segment.fromCheckpoint.name }} ({{ segment.totalDistance - segment.distance}} miles) to {{ segment.toCheckpoint.name }} ({{ segment.totalDistance }} miles)
+  <b-container>
+    <div class="col-sm-12" v-if="segment">
+      <h2>{{ segment.name }}</h2>
+      <h4>{{ race.name }} Course</h4>
+      <div>
+        {{ segment.fromCheckpoint.name }} ({{ segment.totalDistance - segment.distance}} miles) to {{ segment.toCheckpoint.name }} ({{ segment.totalDistance }} miles)
+      </div>
+      <div style="margin-top: 20px;">
+        <b-table responsive striped :fields="fields" :items="leaders" style="width: 100%">
+          <template slot="participant.fullName" slot-scope="data">
+            <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">{{ data.item.participant.fullName }}</router-link>
+          </template>
+        </b-table>
+      </div>
     </div>
-    <div style="margin-top: 20px;">
-      <b-table responsive striped :fields="fields" :items="leaders" style="width: 100%">
-        <template slot="participant.fullName" slot-scope="data">
-          <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">{{ data.item.participant.fullName }}</router-link>
-        </template>
-      </b-table>
-    </div>
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">

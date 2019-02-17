@@ -1,12 +1,16 @@
 <template>
-  <div class="col-sm-12" v-if="race">
-    <h4>{{ race.name }}</h4>
-    <b-table striped :fields="fields" :items="segments">
-      <template slot="name" slot-scope="data">
-        <router-link :to="{ name: 'segment', params: { id: data.item.id }}">{{ data.item.name }}</router-link>
-      </template>
-    </b-table>
-  </div>
+  <b-container v-if="race">
+    <b-row>
+      <b-col sm="12">
+        <h4>{{ race.name }}</h4>
+        <b-table striped :fields="fields" :items="segments">
+          <template slot="name" slot-scope="data">
+            <router-link :to="{ name: 'segment', params: { id: data.item.id }}">{{ data.item.name }}</router-link>
+          </template>
+        </b-table>
+      </b-col>
+    </b-row>
+  </b-container>
 </template>
 
 <script lang="ts">

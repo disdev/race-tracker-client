@@ -1,6 +1,6 @@
 <template>
   <div class="col-sm-12 col-md-6" v-if="race">
-    <h4>{{ race.name }}</h4>
+    <h4 class="text-center">{{ race.name }}</h4>
     <b-table striped :fields="fields" :items="leaders">
       <template slot="place" slot-scope="data">
         {{ data.index + 1 }}

@@ -1,7 +1,13 @@
 <template>
-  <div class="container">
+  <div>
     <div v-if="loadingCount > 0" class="loading">Loading&#8230;</div>
-    <h2>{{ appTitle }}</h2>
+    <b-container>
+      <b-row class="text-center">
+        <b-col>
+          <b-img src="./lovit.png" fluid alt="LOViT Logo" />
+        </b-col>
+      </b-row>
+    </b-container>
     <b-nav class="row justify-content-md-center">
       <b-nav-item to="/">Dashboard</b-nav-item>
       <b-nav-item v-for="race in races" :key="race.id" :to="{ name: 'race', params: { code: race.code }}">{{ race.name }}</b-nav-item>

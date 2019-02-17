@@ -1,13 +1,15 @@
 <template>
-  <div class="row">
-    <div class="col-sm-12">
-      <h4>Leaderboards</h4>
+  <b-container fluid>
+    <div class="row">
+      <div class="col-sm-12 text-center">
+        <h4>Leaderboards</h4>
+      </div>
+      <Leaderboard 
+        v-for="race in races" 
+        v-bind:key="race.id"
+        v-bind:race="race"/>
     </div>
-    <Leaderboard 
-      v-for="race in races" 
-      v-bind:key="race.id"
-      v-bind:race="race"/>
-  </div>
+  </b-container>
 </template>
 
 <script lang="ts">
