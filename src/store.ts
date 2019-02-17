@@ -80,12 +80,12 @@ export default new Vuex.Store({
     },
     addSubscription({ commit }, { phoneNumber, raceNumber }) {
       commit('incrementLoadingCount');
-      api.post('/watchers', null, { params: { raceNumber, phoneNumber }})
+      return api.post('/watchers', null, { params: { raceNumber, phoneNumber }})
         .then((response: any) => {
           commit('decrementLoadingCount');
           return true;
         })
-        .catch(() => {
+        .catch((error: any) => {
           commit('decrementLoadingCount');
           return false;
         });
