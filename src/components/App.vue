@@ -4,7 +4,7 @@
     <b-container>
       <b-row class="text-center">
         <b-col>
-          <b-img src="./lovit.png" fluid alt="LOViT Logo" />
+          <b-img src="/lovit.png" fluid alt="LOViT Logo" />
         </b-col>
       </b-row>
     </b-container>
@@ -30,13 +30,13 @@ export default class App extends Vue {
   @Action('loadSegments') private loadSegments: any;
 
   private appTitle: string = process.env.VUE_APP_TITLE;
-
+  
   private mounted() {
     this.loadRaces();
     this.loadLeaders();
     this.loadSegments();
 
-    // setInterval(this.loadLeaders, 15000);
+    setInterval(this.loadLeaders, 60000);
   }
 }
 </script>
