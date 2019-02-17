@@ -2,8 +2,7 @@
   <div class="col-sm-12" v-if="race">
     <h4>{{ race.name }}</h4>
     <p>
-      <router-link :to="{ name: 'course', params: { code: race.code }}">Course</router-link> | 
-      <router-link :to="{ name: 'checkins', params: { code: race.code }}">Checkins</router-link>
+      <router-link :to="{ name: 'course', params: { code: race.code }}">Course</router-link>
     </p>
     <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%">
       <template slot="place" slot-scope="data">
