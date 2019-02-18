@@ -83,7 +83,39 @@ export default class Participant extends Vue {
       label: 'Time',
       formatter: 'timeFormatter',
     },
+    {
+      key: 'segmentPace',
+      label: 'Segment Pace',
+      formatter: 'segmentPaceCalculator',
+    }
   ];
+
+  private segmentPaceCalculator(value: any, key: any, item: any) {
+    if (item.when != undefined) {
+      var previous: any;
+      
+      if (item.order === 1) {
+        previous = moment(this.race.start);
+      } else {
+        previous = moment(this.leader.checkins[item.order - 1]);
+      }
+
+      var current = moment(item.when);
+      var seconds = moment.duration(current.diff(previous)).asSeconds();
+      return this.calculatePace(seconds, item.distance);
+    }
+    
+    return '';
+  }
+
+  private calculatePace(seconds: number, distance: number) {
+    var calculatedPace = Math.floor(seconds / distance);
+    var paceMins = Math.floor(calculatedPace / 60);
+    var paceSecs = calculatedPace - (paceMins * 60);
+    var output = paceMins + ':';
+    output += (paceSecs < 10) ? '0' + paceSecs : paceSecs;
+    return output;
+  }
 
   private errors: any = [];
 
@@ -116,7 +148,7 @@ export default class Participant extends Vue {
         when: this.leader.checkins[segment.order],
       });
     });
-
+    console.log(out);
     return out;
   }
 
