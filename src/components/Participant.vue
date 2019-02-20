@@ -64,6 +64,7 @@ export default class Participant extends Vue {
   @Action('addSubscription') private addSubscription: any;
 
   private subscriptionPhone: string = '';
+  private errors: any = [];
 
   private fields: any = [
     {
@@ -84,40 +85,113 @@ export default class Participant extends Vue {
       formatter: 'timeFormatter',
     },
     {
+      key: 'segmentTime',
+      label: 'Time',
+      formatter: 'segmentTimeFormatter',
+    },
+    {
       key: 'segmentPace',
-      label: 'Segment Pace',
-      formatter: 'segmentPaceCalculator',
-    }
+      label: 'Pace',
+      formatter: 'segmentPaceFormatter',
+    },
+    {
+      key: 'totalTime',
+      label: 'Total Time',
+      formatter: 'totalTimeFormatter',
+    },
+    {
+      key: 'totalPace',
+      label: 'Total Pace',
+      formatter: 'totalPaceFormatter',
+    },
   ];
 
-  private segmentPaceCalculator(value: any, key: any, item: any) {
-    if (item.when != undefined) {
-      var previous: any;
-      
+  private formatTimeFromSeconds(totalSeconds: number) {
+    const hours = totalSeconds / (60 * 60);
+    const absoluteHours = Math.floor(hours);
+    const h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+
+    const minutes = (hours - absoluteHours) * 60;
+    const absoluteMinutes = Math.floor(minutes);
+    const m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+
+    const seconds = (minutes - absoluteMinutes) * 60;
+    const absoluteSeconds = Math.floor(seconds);
+    const s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+
+    if (absoluteHours > 0) {
+      return absoluteHours + ':' + m + ':' + s;
+    } else {
+      return absoluteMinutes + ':' + s;
+    }
+
+  }
+
+  private calculatePace(seconds: number, distance: number) {
+    return this.formatTimeFromSeconds(Math.floor(seconds / distance));
+  }
+
+  private segmentTimeFormatter(value: any, key: any, item: any) {
+    if (item.when !== undefined) {
+      let previous: any;
+
       if (item.order === 1) {
         previous = moment(this.race.start);
       } else {
         previous = moment(this.leader.checkins[item.order - 1]);
       }
 
-      var current = moment(item.when);
-      var seconds = moment.duration(current.diff(previous)).asSeconds();
-      return this.calculatePace(seconds, item.distance);
+      const current = moment(item.when);
+      const seconds = moment.duration(current.diff(previous)).asSeconds();
+
+      return this.formatTimeFromSeconds(seconds);
     }
-    
+
     return '';
   }
 
-  private calculatePace(seconds: number, distance: number) {
-    var calculatedPace = Math.floor(seconds / distance);
-    var paceMins = Math.floor(calculatedPace / 60);
-    var paceSecs = calculatedPace - (paceMins * 60);
-    var output = paceMins + ':';
-    output += (paceSecs < 10) ? '0' + paceSecs : paceSecs;
-    return output;
+  private segmentPaceFormatter(value: any, key: any, item: any) {
+    if (item.when !== undefined) {
+      let previous: any;
+
+      if (item.order === 1) {
+        previous = moment(this.race.start);
+      } else {
+        previous = moment(this.leader.checkins[item.order - 1]);
+      }
+
+      const current = moment(item.when);
+      const seconds = moment.duration(current.diff(previous)).asSeconds();
+
+      return this.calculatePace(seconds, item.distance);
+    }
+
+    return '';
   }
 
-  private errors: any = [];
+  private totalTimeFormatter(value: any, key: any, item: any) {
+    if (item.when !== undefined) {
+      const previous: any = this.race.start;
+      const current = moment(item.when);
+      const seconds = moment.duration(current.diff(previous)).asSeconds();
+
+      return this.formatTimeFromSeconds(seconds);
+    }
+
+    return '';
+  }
+
+  private totalPaceFormatter(value: any, key: any, item: any) {
+    if (item.when !== undefined) {
+      const previous: any = this.race.start;
+      const current = moment(item.when);
+      const seconds = moment.duration(current.diff(previous)).asSeconds();
+
+      return this.calculatePace(seconds, item.totalDistance);
+    }
+
+    return '';
+  }
 
   private async handleSubscribe(evt: any) {
     evt.preventDefault();
@@ -148,7 +222,7 @@ export default class Participant extends Vue {
         when: this.leader.checkins[segment.order],
       });
     });
-    console.log(out);
+
     return out;
   }
 
