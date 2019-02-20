@@ -2,7 +2,10 @@
   <div class="container" v-if="leader && race">
     <div class="row">
       <div class="col-sm-9">
-        <h4>{{ leader.participant.fullName }} - #{{ leader.participant.bib }}</h4>
+        <h4>
+          {{ leader.participant.fullName }} - #{{ leader.participant.bib }}
+          <b-badge :variant="statusClass">{{ statusText }}</b-badge>
+        </h4>
         <div>
           {{ leader.participant.age }}<br/>
           {{ leader.participant.hometown }}
@@ -236,6 +239,56 @@ export default class Participant extends Vue {
 
   get segments() {
     return this.getSegmentsByRaceId(this.race.id);
+  }
+
+  get statusText() {
+    let out: string = '';
+    switch (this.leader.participant.status) {
+      case 0:
+        out = 'Registered';
+        break;
+      case 1:
+        out = 'DNS';
+        break;
+      case 2:
+        out = 'On Course';
+        break;
+      case 3:
+        out = 'DNF';
+        break;
+      case 4:
+        out = 'Finished';
+        break;
+      default:
+        break;
+    }
+
+    return out;
+  }
+
+  get statusClass() {
+    let out: string = '';
+    switch (this.leader.participant.status) {
+      case 0:
+        out = 'primary';
+        break;
+      case 1:
+        out = 'warning';
+        break;
+      case 2:
+        out = 'secondary';
+        break;
+      case 3:
+        out = 'danger';
+        break;
+      case 4:
+        out = 'success';
+        break;
+      default:
+        break;
+    }
+
+    return out;
   }
 
   private timeFormatter(value: any, key: any, item: any) {

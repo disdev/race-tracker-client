@@ -6,7 +6,10 @@
         {{ data.index + 1 }}
       </template>
       <template slot="participant.fullName" slot-scope="data">
-        <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">{{ data.item.participant.fullName }}</router-link>
+        <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
+          {{ data.item.participant.fullName }}
+          <b-badge :variant="statusClass(data.item.participant.status)">{{ statusText(data.item.participant.status) }}</b-badge>
+        </router-link>
       </template>
     </b-table>
   </div>
@@ -49,6 +52,56 @@ export default class Leaderboard extends Vue {
 
   get leaders() {
     return this.getLeadersByRaceId(this.race.id);
+  }
+
+  private statusText(status: number) {
+    let out: string = '';
+    switch (status) {
+      case 0:
+        out = 'Registered';
+        break;
+      case 1:
+        out = 'DNS';
+        break;
+      case 2:
+        out = 'On Course';
+        break;
+      case 3:
+        out = 'DNF';
+        break;
+      case 4:
+        out = 'Finished';
+        break;
+      default:
+        break;
+    }
+
+    return out;
+  }
+
+  private statusClass(status: number) {
+    let out: string = '';
+    switch (status) {
+      case 0:
+        out = 'primary';
+        break;
+      case 1:
+        out = 'warning';
+        break;
+      case 2:
+        out = 'secondary';
+        break;
+      case 3:
+        out = 'danger';
+        break;
+      case 4:
+        out = 'success';
+        break;
+      default:
+        break;
+    }
+
+    return out;
   }
 
   private timeFormatter(value: any, key: any, item: any) {
