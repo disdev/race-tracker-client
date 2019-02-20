@@ -84,7 +84,7 @@ export default class Participant extends Vue {
     },
     {
       key: 'when',
-      label: 'Time',
+      label: 'Checkin',
       formatter: 'timeFormatter',
     },
     {
