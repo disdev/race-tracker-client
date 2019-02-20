@@ -84,27 +84,27 @@ export default class Participant extends Vue {
     },
     {
       key: 'when',
-      label: 'Checkin',
+      label: 'Check in',
       formatter: 'timeFormatter',
     },
     {
       key: 'segmentTime',
-      label: 'Time',
+      label: 'Segment Time',
       formatter: 'segmentTimeFormatter',
     },
     {
       key: 'segmentPace',
-      label: 'Pace',
+      label: 'Segment Pace',
       formatter: 'segmentPaceFormatter',
     },
     {
       key: 'totalTime',
-      label: 'Total Time',
+      label: 'Overall Time',
       formatter: 'totalTimeFormatter',
     },
     {
       key: 'totalPace',
-      label: 'Total Pace',
+      label: 'Overall Pace',
       formatter: 'totalPaceFormatter',
     },
   ];

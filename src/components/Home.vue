@@ -1,9 +1,6 @@
 <template>
   <b-container fluid>
-    <div class="row">
-      <div class="col-sm-12 text-center">
-        <h4>Leaderboards</h4>
-      </div>
+    <div class="row" style="margin-top: 20px;">
       <Leaderboard 
         v-for="race in races" 
         v-bind:key="race.id"

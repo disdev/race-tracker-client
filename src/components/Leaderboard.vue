@@ -1,6 +1,6 @@
 <template>
   <div class="col-sm-12 col-md-6" v-if="race">
-    <h4 class="text-center">{{ race.name }}</h4>
+    <h4 class="text-center">{{ race.name }} Leaderboard</h4>
     <b-table striped :fields="fields" :items="leaders">
       <template slot="place" slot-scope="data">
         {{ data.index + 1 }}
@@ -8,8 +8,8 @@
       <template slot="participant.fullName" slot-scope="data">
         <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
           {{ data.item.participant.fullName }}
-          <b-badge :variant="statusClass(data.item.participant.status)">{{ statusText(data.item.participant.status) }}</b-badge>
-        </router-link>
+        </router-link>&nbsp;
+        <b-badge :variant="statusClass(data.item.participant.status)">{{ statusText(data.item.participant.status) }}</b-badge>
       </template>
     </b-table>
   </div>
