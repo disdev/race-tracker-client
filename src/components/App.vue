@@ -2,13 +2,19 @@
   <div>
     <div v-if="loadingCount > 0" class="loading">Loading&#8230;</div>
     <b-container>
-      <b-row class="text-center">
+      <b-row class="text-center" style="margin-top:12px; margin-bottom:12px;">
+        <b-col>
+          <b-img src="/nf.png" fluid alt="The North Face" />
+        </b-col>
         <b-col>
           <b-img src="/lovit.png" fluid alt="LOViT Logo" />
         </b-col>
+        <b-col>
+          <b-img src="/mhr.png" fluid alt="Mountain Harbor Resort" />
+        </b-col>
       </b-row>
     </b-container>
-    <b-nav class="row justify-content-md-center">
+    <b-nav class="row justify-content-center">
       <b-nav-item to="/">Dashboard</b-nav-item>
       <b-nav-item v-for="race in races" :key="race.id" :to="{ name: 'race', params: { code: race.code }}">{{ race.name }}</b-nav-item>
     </b-nav>
@@ -30,7 +36,7 @@ export default class App extends Vue {
   @Action('loadSegments') private loadSegments: any;
 
   private appTitle: string = process.env.VUE_APP_TITLE;
-  
+
   private mounted() {
     this.loadRaces();
     this.loadLeaders();
