@@ -80,8 +80,36 @@ export default class Race extends Vue {
     return this.getSegmentsByRaceId(this.race.id);
   }
 
+  private formatTimeFromSeconds(totalSeconds: number) {
+    const hours = totalSeconds / (60 * 60);
+    const absoluteHours = Math.floor(hours);
+    const h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+
+    const minutes = (hours - absoluteHours) * 60;
+    const absoluteMinutes = Math.floor(minutes);
+    const m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+
+    const seconds = (minutes - absoluteMinutes) * 60;
+    const absoluteSeconds = Math.floor(seconds);
+    const s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+
+    if (absoluteHours > 0) {
+      return absoluteHours + ':' + m + ':' + s;
+    } else {
+      return absoluteMinutes + ':' + s;
+    }
+  }
+
   private timeFormatter(value: any, key: any, item: any) {
-    return value ? moment(value).format('LT') : '';
+    if (value !== undefined) {
+      const previous: any = this.race.start;
+      const current = moment(value);
+      const seconds = moment.duration(current.diff(previous)).asSeconds();
+
+      return this.formatTimeFromSeconds(seconds);
+    }
+
+    return '';
   }
 
   private participantLinkFormatter(value: any, key: any, item: any) {
