@@ -32,7 +32,6 @@ export default class Checkin extends Vue {
   private segmentId: string = '';
 
   private async onConfirm() {
-    console.log('onConfirm', this.checkin.id, this.segmentId);
     const confirmResult = await this.confirmCheckin({
       checkinId: this.checkin.id,
       segmentId: this.segmentId,
