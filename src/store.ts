@@ -90,6 +90,18 @@ export default new Vuex.Store({
           return false;
         });
     },
+    confirmCheckin({ commit }, { checkinId, segmentId }) {
+      commit('incrementLoadingCount');
+      return api.post('/checkins/confirm', null, { params: { checkinId, segmentId }})
+        .then((response: any) => {
+          commit('decrementLoadingCount');
+          return true;
+        })
+        .catch((error: any) => {
+          commit('decrementLoadingCount');
+          return false;
+        });
+    },
   },
   getters: {
     getLeadersByRaceId: (state) => (id: string) => {
@@ -107,6 +119,14 @@ export default new Vuex.Store({
     },
     getSegmentsByRaceId: (state) => (raceId: string) => {
       return state.segments.filter((segment: any) => segment.raceId === raceId);
+    },
+    getSegmentsByRaceCode: (state) => (code: string) => {
+      const race: any = state.races.find((r: any) => r.code === code);
+      return state.segments.filter((segment: any) => segment.raceId === race.id);
+    },
+    getPendingCheckinsByRaceCode: (state) => (code: string) => {
+      const race: any = state.races.find((r: any) => r.code === code);
+      return state.pendingCheckins.filter((checkin: any) => checkin.participant.raceId === race.id);
     },
     getPendingCheckinsByRaceId: (state) => (id: string) => {
       return state.pendingCheckins.filter((checkin: any) => checkin.participant.raceId === id);

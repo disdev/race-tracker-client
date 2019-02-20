@@ -4,7 +4,7 @@ import Home from './components/Home.vue';
 import Race from './components/Race.vue';
 import Course from './components/Course.vue';
 import Segment from './components/Segment.vue';
-import Checkins from './components/Checkins.vue';
+import Confirm from './components/Confirm.vue';
 import Callback from './components/Callback.vue';
 import Participant from './components/Participant.vue';
 
@@ -35,11 +35,6 @@ const router = new Router({
       component: Segment,
     },
     {
-      path: '/checkins/:code',
-      name: 'checkins',
-      component: Checkins,
-    },
-    {
       path: '/callback',
       name: 'callback',
       component: Callback,
@@ -48,6 +43,11 @@ const router = new Router({
       path: '/participant/:id',
       name: 'participant',
       component: Participant,
+    },
+    {
+      path: '/confirm/:code',
+      name: 'confirm',
+      component: Confirm,
     },
   ],
 });
