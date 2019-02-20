@@ -4,18 +4,18 @@
     <b-container>
       <b-row class="text-center" style="margin-top:12px; margin-bottom:12px;">
         <b-col>
-          <b-img src="/nf.png" fluid alt="The North Face" />
+          <a href="http://northface.com"><b-img src="/nf.png" fluid alt="The North Face" /></a>
         </b-col>
         <b-col>
-          <b-img src="/lovit.png" fluid alt="LOViT Logo" />
+          <a href="https://runlovit.com"><b-img src="/lovit.png" fluid alt="LOViT Logo" /></a>
         </b-col>
         <b-col>
-          <b-img src="/mhr.png" fluid alt="Mountain Harbor Resort" />
+          <a href="http://www.mountainharborresort.com"><b-img src="/mhr.png" fluid alt="Mountain Harbor Resort" /></a>
         </b-col>
       </b-row>
     </b-container>
     <b-nav class="row justify-content-center">
-      <b-nav-item to="/">Dashboard</b-nav-item>
+      <b-nav-item to="/">Leaderboards</b-nav-item>
       <b-nav-item v-for="race in races" :key="race.id" :to="{ name: 'race', params: { code: race.code }}">{{ race.name }}</b-nav-item>
     </b-nav>
     <router-view/>
