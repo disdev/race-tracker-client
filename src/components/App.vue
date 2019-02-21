@@ -4,7 +4,7 @@
     <b-container>
       <b-row class="text-center" style="margin-top:12px; margin-bottom:12px;">
         <b-col>
-          <a href="http://northface.com"><b-img src="/nf.png" fluid alt="The North Face" /></a>
+          <a href="http://northface.com"><b-img src="/nf-black.jpg" fluid alt="The North Face" /></a>
         </b-col>
         <b-col>
           <a href="https://runlovit.com"><b-img src="/lovit.png" fluid alt="LOViT Logo" /></a>
