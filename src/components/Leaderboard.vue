@@ -1,7 +1,11 @@
 <template>
   <b-row>
     <b-col cols="12">
-      <h4 class="text-center">{{ race.name }} Leaderboard</h4>
+      <router-link :to="{ name: 'race', params: { code: race.code }}">
+        <h4 class="text-center">
+          {{ race.name }} Leaderboard
+        </h4>
+      </router-link>
     </b-col>
     <b-col cols="12">
       <b-form-group label-cols-sm="3" label="Search" class="mb-0">
