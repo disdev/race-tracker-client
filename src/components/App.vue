@@ -14,9 +14,20 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-nav class="row justify-content-center">
-      <b-nav-item to="/">Leaderboards</b-nav-item>
-      <b-nav-item v-for="race in races" :key="race.id" :to="{ name: 'race', params: { code: race.code }}">{{ race.name }}</b-nav-item>
+    <b-nav pills class="row justify-content-center">
+      <b-nav-item 
+        to="/" 
+        active-class="active"
+        exact>
+        Leaderboards
+      </b-nav-item>
+      <b-nav-item 
+        v-for="race in races" 
+        :key="race.id" 
+        :to="{ name: 'race', params: { code: race.code }}"
+        active-class="active">
+        {{ race.name }}
+      </b-nav-item>
     </b-nav>
     <router-view/>
   </div>
