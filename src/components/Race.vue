@@ -4,10 +4,15 @@
     <p>
       <router-link :to="{ name: 'course', params: { code: race.code }}">Course</router-link>
     </p>
-    <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%">
-      <template slot="place" slot-scope="data">
-        {{ data.index + 1 }}
-      </template>
+    <b-form-group label-cols-sm="3" label="Search" class="mb-0">
+      <b-input-group>
+        <b-form-input v-model="filterText" placeholder="Name" />
+        <b-input-group-append>
+          <b-button :disabled="!filterText" @click="filterText = ''">Clear</b-button>
+        </b-input-group-append>
+      </b-input-group>
+    </b-form-group>
+    <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%" :filter="filterText">
       <template slot="name" slot-scope="data">
         <router-link :to="{ name: 'participant', params: { id: data.item.bib }}">{{ data.item.name }}</router-link>
       </template>
@@ -27,6 +32,8 @@ export default class Race extends Vue {
   @Getter('getLeadersByRaceCode') private getLeadersByRaceCode: any;
   @Getter('getRaceByCode') private getRaceByCode: any;
   @Getter('getSegmentsByRaceId') private getSegmentsByRaceId: any;
+
+  private filterText: string = '';
 
   get fields() {
     const out = [
@@ -58,15 +65,18 @@ export default class Race extends Vue {
 
   get rowData() {
     const data: any = [];
+    let index: number = 1;
 
     this.leaders.forEach((leader: any) => {
       const row = {
         name: leader.participant.fullName,
         bib: leader.participant.bib,
+        place: index,
         ...leader.checkins,
       };
 
       data.push(row);
+      index++;
     });
 
     return data;

@@ -1,18 +1,29 @@
 <template>
-  <div class="col-sm-12 col-md-6" v-if="race">
-    <h4 class="text-center">{{ race.name }} Leaderboard</h4>
-    <b-table striped :fields="fields" :items="leaders">
-      <template slot="place" slot-scope="data">
-        {{ data.index + 1 }}
-      </template>
-      <template slot="participant.fullName" slot-scope="data">
-        <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
-          {{ data.item.participant.fullName }}
-        </router-link>&nbsp;
-        <b-badge :variant="statusClass(data.item.participant.status)">{{ statusText(data.item.participant.status) }}</b-badge>
-      </template>
-    </b-table>
-  </div>
+  <b-row>
+    <b-col cols="12">
+      <h4 class="text-center">{{ race.name }} Leaderboard</h4>
+    </b-col>
+    <b-col cols="12">
+      <b-form-group label-cols-sm="3" label="Search" class="mb-0">
+        <b-input-group>
+          <b-form-input v-model="filterText" placeholder="Name" />
+          <b-input-group-append>
+            <b-button :disabled="!filterText" @click="filterText = ''">Clear</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </b-form-group>
+    </b-col>
+    <b-col>
+      <b-table striped :fields="fields" :items="leaders" :filter="filterText">
+        <template slot="displayName" slot-scope="data">
+          <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
+            {{ data.item.displayName }}
+          </router-link>&nbsp;
+          <b-badge :variant="statusClass(data.item.participant.status)">{{ statusText(data.item.participant.status) }}</b-badge>
+        </template>
+      </b-table>
+    </b-col>
+  </b-row>
 </template>
 
 <script lang="ts">
@@ -26,17 +37,14 @@ export default class Leaderboard extends Vue {
 
   @Getter('getLeadersByRaceId') private getLeadersByRaceId: any;
 
+  private filterText: string = '';
   private fields: any = [
     {
       key: 'place',
       label: 'Place',
     },
     {
-      key: 'participant.bib',
-      label: 'Bib',
-    },
-    {
-      key: 'participant.fullName',
+      key: 'displayName',
       label: 'Name',
     },
     {
@@ -51,7 +59,15 @@ export default class Leaderboard extends Vue {
   ];
 
   get leaders() {
-    return this.getLeadersByRaceId(this.race.id);
+    const leaders: any = [];
+    let place = 1;
+    this.getLeadersByRaceId(this.race.id).forEach((leader: any) => {
+      leader.place = place;
+      leader.displayName = leader.participant.fullName + ' - #' + leader.participant.bib;
+      leaders.push(leader);
+      place++;
+    });
+    return leaders;
   }
 
   private statusText(status: number) {

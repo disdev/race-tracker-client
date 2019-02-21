@@ -1,11 +1,11 @@
 <template>
   <b-container fluid>
-    <div class="row" style="margin-top: 20px;">
-      <Leaderboard 
-        v-for="race in races" 
-        v-bind:key="race.id"
-        v-bind:race="race"/>
-    </div>
+    <b-row style="margin-top: 20px;">
+      <b-col cols="12" md="6" v-for="race in races" v-bind:key="race.id">
+        <Leaderboard 
+          v-bind:race="race"/>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
