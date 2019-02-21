@@ -7,7 +7,7 @@
         </h4>
       </router-link>
     </b-col>
-    <b-col cols="12">
+    <b-col cols="12" style="margin-bottom: 8px;">
       <b-form-group label-cols-sm="3" label="Search" class="mb-0">
         <b-input-group>
           <b-form-input v-model="filterText" placeholder="Name" />
@@ -18,7 +18,7 @@
       </b-form-group>
     </b-col>
     <b-col>
-      <b-table striped :fields="fields" :items="leaders" :filter="filterText">
+      <b-table responsive striped :fields="fields" :items="leaders" :filter="filterText">
         <template slot="displayName" slot-scope="data">
           <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
             {{ data.item.displayName }}
@@ -45,7 +45,7 @@ export default class Leaderboard extends Vue {
   private fields: any = [
     {
       key: 'place',
-      label: 'Place',
+      label: '',
     },
     {
       key: 'displayName',

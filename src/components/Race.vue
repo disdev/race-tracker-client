@@ -5,7 +5,7 @@
       <router-link :to="{ name: 'course', params: { code: race.code }}">Course</router-link>
     </p>
     <b-form-group label-cols-sm="3" label="Search" class="mb-0">
-      <b-input-group>
+      <b-input-group style="margin-bottom: 8px;">
         <b-form-input v-model="filterText" placeholder="Name" />
         <b-input-group-append>
           <b-button :disabled="!filterText" @click="filterText = ''">Clear</b-button>
