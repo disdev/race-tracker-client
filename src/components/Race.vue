@@ -6,13 +6,13 @@
     </p>
     <b-form-group label-cols-sm="3" label="Search" class="mb-0">
       <b-input-group style="margin-bottom: 8px;">
-        <b-form-input v-model="filterText" placeholder="Name" />
+        <b-form-input size="small" v-model="filterText" placeholder="Name" />
         <b-input-group-append>
-          <b-button :disabled="!filterText" @click="filterText = ''">Clear</b-button>
+          <b-button variant="primary" :disabled="!filterText" @click="filterText = ''">Clear</b-button>
         </b-input-group-append>
       </b-input-group>
     </b-form-group>
-    <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%" :filter="filterText">
+    <b-table responsive small hover :fields="fields" :items="rowData" style="width: 100%" :filter="filterText">
       <template slot="name" slot-scope="data">
         <router-link :to="{ name: 'participant', params: { id: data.item.bib }}">{{ data.item.name }}</router-link>
       </template>

@@ -10,15 +10,15 @@
     <b-col cols="12" style="margin-bottom: 8px;">
       <b-form-group label-cols-sm="3" label="Search" class="mb-0">
         <b-input-group>
-          <b-form-input v-model="filterText" placeholder="Name" />
+          <b-form-input size="small" v-model="filterText" placeholder="Name" />
           <b-input-group-append>
-            <b-button :disabled="!filterText" @click="filterText = ''">Clear</b-button>
+            <b-button variant="primary" :disabled="!filterText" @click="filterText = ''">Clear</b-button>
           </b-input-group-append>
         </b-input-group>
       </b-form-group>
     </b-col>
     <b-col>
-      <b-table responsive striped :fields="fields" :items="leaders" :filter="filterText">
+      <b-table responsive small hover :fields="fields" :items="leaders" :filter="filterText">
         <template slot="displayName" slot-scope="data">
           <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">
             {{ data.item.displayName }}
@@ -45,7 +45,7 @@ export default class Leaderboard extends Vue {
   private fields: any = [
     {
       key: 'place',
-      label: '',
+      label: 'Place',
     },
     {
       key: 'displayName',
@@ -103,13 +103,13 @@ export default class Leaderboard extends Vue {
     let out: string = '';
     switch (status) {
       case 0:
-        out = 'primary';
+        out = 'secondary';
         break;
       case 1:
         out = 'warning';
         break;
       case 2:
-        out = 'secondary';
+        out = 'primary';
         break;
       case 3:
         out = 'danger';

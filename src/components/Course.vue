@@ -3,7 +3,7 @@
     <b-row>
       <b-col sm="12">
         <h4>{{ race.name }}</h4>
-        <b-table striped :fields="fields" :items="segments">
+        <b-table small hover :fields="fields" :items="segments">
           <template slot="name" slot-scope="data">
             <router-link :to="{ name: 'segment', params: { id: data.item.id }}">{{ data.item.name }}</router-link>
           </template>

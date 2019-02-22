@@ -7,7 +7,7 @@
         {{ segment.fromCheckpoint.name }} ({{ segment.totalDistance - segment.distance}} miles) to {{ segment.toCheckpoint.name }} ({{ segment.totalDistance }} miles)
       </div>
       <div style="margin-top: 20px;">
-        <b-table responsive striped :fields="fields" :items="rowData" style="width: 100%">
+        <b-table responsive hover :fields="fields" :items="rowData" style="width: 100%">
           <template slot="participant.fullName" slot-scope="data">
             <router-link :to="{ name: 'participant', params: { id: data.item.participant.bib }}">{{ data.item.participant.fullName }} - #{{ data.item.participant.bib }}</router-link>
           </template>

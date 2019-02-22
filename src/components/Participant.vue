@@ -40,7 +40,7 @@
     </div>
     <div class="row">
       <div class="col-sm-12" style="margin-top: 20px;">
-        <b-table striped :fields="fields" :items="rowData"></b-table>
+        <b-table small hover :fields="fields" :items="rowData"></b-table>
       </div>
     </div>
   </div>
@@ -270,13 +270,13 @@ export default class Participant extends Vue {
     let out: string = '';
     switch (this.leader.participant.status) {
       case 0:
-        out = 'primary';
+        out = 'secondary';
         break;
       case 1:
         out = 'warning';
         break;
       case 2:
-        out = 'secondary';
+        out = 'primary';
         break;
       case 3:
         out = 'danger';
