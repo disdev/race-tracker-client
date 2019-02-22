@@ -5,7 +5,6 @@ import Race from './components/Race.vue';
 import Course from './components/Course.vue';
 import Segment from './components/Segment.vue';
 import Confirm from './components/Confirm.vue';
-import Callback from './components/Callback.vue';
 import Participant from './components/Participant.vue';
 
 Vue.use(Router);
@@ -33,11 +32,6 @@ const router = new Router({
       path: '/segment/:id',
       name: 'segment',
       component: Segment,
-    },
-    {
-      path: '/callback',
-      name: 'callback',
-      component: Callback,
     },
     {
       path: '/participant/:id',
