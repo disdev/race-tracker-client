@@ -127,7 +127,7 @@ export default class Leaderboard extends Vue {
   private timeFormatter(value: any, key: any, item: any) {
     if (item.lastCheckin) {
       if (item.lastCheckin) {
-        const previous = moment(this.race.start + 'Z');
+        const previous = moment(this.race.start);
         const current = moment(item.lastCheckin.when);
 
         return this.formatTimeFromSeconds(moment.duration(current.diff(previous)).asSeconds());
