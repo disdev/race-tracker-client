@@ -139,7 +139,7 @@ export default class Participant extends Vue {
       let previous: any;
 
       if (item.order === 1) {
-        previous = moment(this.race.start);
+        previous = moment(this.race.start + 'Z');
       } else {
         previous = moment(this.leader.checkins[item.order - 1]);
       }
@@ -158,7 +158,7 @@ export default class Participant extends Vue {
       let previous: any;
 
       if (item.order === 1) {
-        previous = moment(this.race.start);
+        previous = moment(this.race.start + 'Z');
       } else {
         previous = moment(this.leader.checkins[item.order - 1]);
       }
@@ -174,7 +174,7 @@ export default class Participant extends Vue {
 
   private totalTimeFormatter(value: any, key: any, item: any) {
     if (item.when !== undefined) {
-      const previous: any = this.race.start;
+      const previous: any = this.race.start + 'Z';
       const current = moment(item.when);
       const seconds = moment.duration(current.diff(previous)).asSeconds();
 
@@ -186,7 +186,7 @@ export default class Participant extends Vue {
 
   private totalPaceFormatter(value: any, key: any, item: any) {
     if (item.when !== undefined) {
-      const previous: any = this.race.start;
+      const previous: any = this.race.start + 'Z';
       const current = moment(item.when);
       const seconds = moment.duration(current.diff(previous)).asSeconds();
 

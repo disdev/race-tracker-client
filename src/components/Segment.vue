@@ -68,7 +68,7 @@ export default class Segment extends Vue {
     out.sort((first: any, second: any) => {
       const firstTime = moment(first.thisCheckin);
       const secondTime = moment(second.thisCheckin);
-      
+
       if (firstTime.isBefore(secondTime)) {
         return -1;
       }
