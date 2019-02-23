@@ -45,7 +45,7 @@ export default class Segment extends Vue {
     if (this.segment) {
       this.leaders.forEach((leader: any) => {
         if (thisSegment.order === 1) {
-          previous = moment(this.race.start);
+          previous = moment(this.race.start + 'Z');
         } else {
           previous = moment(leader.checkins[thisSegment.order - 1]);
         }
