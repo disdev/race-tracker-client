@@ -112,7 +112,7 @@ export default class Race extends Vue {
 
   private timeFormatter(value: any, key: any, item: any) {
     if (value !== undefined) {
-      const previous: any = this.race.start;
+      const previous: any = this.race.start + 'Z';
       const current = moment(value);
       const seconds = moment.duration(current.diff(previous)).asSeconds();
 
