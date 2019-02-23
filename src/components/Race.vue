@@ -14,7 +14,8 @@
     </b-form-group>
     <b-table responsive small hover :fields="fields" :items="rowData" style="width: 100%" :filter="filterText">
       <template slot="name" slot-scope="data">
-        <router-link :to="{ name: 'participant', params: { id: data.item.bib }}">{{ data.item.name }}</router-link>
+        <router-link :to="{ name: 'participant', params: { id: data.item.bib }}">{{ data.item.name }}</router-link>&nbsp;
+        <b-badge :variant="statusClass(data.item.status)">{{ statusText(data.item.status) }}</b-badge>
       </template>
     </b-table>
   </div>
@@ -34,6 +35,56 @@ export default class Race extends Vue {
   @Getter('getSegmentsByRaceId') private getSegmentsByRaceId: any;
 
   private filterText: string = '';
+
+  private statusText(status: any) {
+    let out: string = '';
+    switch (status) {
+      case 0:
+        out = 'Registered';
+        break;
+      case 1:
+        out = 'DNS';
+        break;
+      case 2:
+        out = 'On Course';
+        break;
+      case 3:
+        out = 'DNF';
+        break;
+      case 4:
+        out = 'Finished';
+        break;
+      default:
+        break;
+    }
+
+    return out;
+  }
+
+  private statusClass(status: number) {
+    let out: string = '';
+    switch (status) {
+      case 0:
+        out = 'secondary';
+        break;
+      case 1:
+        out = 'warning';
+        break;
+      case 2:
+        out = 'primary';
+        break;
+      case 3:
+        out = 'danger';
+        break;
+      case 4:
+        out = 'success';
+        break;
+      default:
+        break;
+    }
+
+    return out;
+  }
 
   get fields() {
     const out = [
@@ -73,6 +124,7 @@ export default class Race extends Vue {
         bib: leader.participant.bib,
         place: index,
         ...leader.checkins,
+        status: leader.participant.status,
       };
 
       data.push(row);
